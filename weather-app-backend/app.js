@@ -8,6 +8,11 @@ var apicache = require('apicache');
 
 let cache = apicache.middleware;
 
+const corsOptions ={
+  origin:'http://localhost:3000',
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
 
 var indexRouter = require('./routes/index');
 var weatherRouter = require('./routes/weather');
@@ -19,8 +24,9 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//Sets up caching middleware and CORS options
 app.use(cache('10 minutes'));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/weather', weatherRouter);
+app.use('/weather', weatherRouter); //Routing for the weather data endpoint
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

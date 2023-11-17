@@ -6,6 +6,7 @@ import { ReactComponent as ThunderStorm } from "./../assets/weather-logos/thunde
 import { ReactComponent as Snow } from "./../assets/weather-logos/snowy.svg";
 import { ReactComponent as HeavySnow } from "./../assets/weather-logos/snowy-heavy.svg";
 
+//This is a mapping object to match the received weather code from the API response with the SVGs to render on the information screen
 export const weatherCodeMapping = {
     395: [ThunderStorm, Snow], //"Moderate or heavy snow in area with thunder", //SNOW THUNDER
     392: [ThunderStorm, Snow], //"Patchy light snow in area with thunder", //SNOW THUNDER

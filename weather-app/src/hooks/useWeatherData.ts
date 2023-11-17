@@ -1,15 +1,8 @@
-import { useState } from "react";
 import * as weatherDataService from "./../services/weather-data-service";
 import { useQuery } from "react-query";
 import { WeatherResponse } from "../types/weather-response-type";
-import { ResponseError } from "../types/response-error-type";
 
-const DEFAULT_DATA = {};
-
-// const fetchData = (location: string) => {
-//     return weatherDataService.get(location);
-// };
-
+//This hook streamlines the data fetching process as well as error handling for the app
 export const useWeatherData = (location: string) => {
     const { isError, error, data, refetch } = useQuery<WeatherResponse>(
         ["weather-data", location],

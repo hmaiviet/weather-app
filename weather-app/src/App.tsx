@@ -10,23 +10,25 @@ import { ErrorMessage } from './components/error-message';
 
 
 function App() {
-  const [input, setInput] = useState('');
-  const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
-  const [isError, setIsError] = useState(false);
+  const [input, setInput] = useState(''); //state of the input field
+  const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null); //state of the weather data
+  const [isError, setIsError] = useState(false); //state of checking errors
 
   const { refetch, error} = useWeatherData(input);
 
+  //handles the key press action on the input field
   const handleKeyDown = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       await refetch().then((response) => {
         if (response.status==='success')
-          setWeatherData(response.data);
-        if (response.status === 'error')
-          setIsError(true);
-      })
-    }
-  }
+        setWeatherData(response.data);
+      if (response.status === 'error')
+      setIsError(true);
+  })
+}
+}
 
+  //handles the click action on the button
   const onSubmitClick = async () => {
     await refetch().then((response) => {
       if (response.status==='success')
@@ -36,6 +38,8 @@ function App() {
     })
   }
 
+  //This functional react componenet should render a single page application. There is no routing or navigation in this application.
+  //The rendering logic is all based on the state of the data (If there is no error and there is weather data then the app renders the information).
   return (
     <div className="App">
       <div className="bg-[#3059c9] min-h-[100vh] flex flex-col items-center justify-center">

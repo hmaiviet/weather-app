@@ -5,6 +5,7 @@ type Props = {
     weatherData: WeatherResponse | null
 }
 
+//Functional component to render the data received from the API response
 export const WeatherReport = ({ weatherData }: Props) => {
     if (!weatherData) return null;
 
@@ -17,6 +18,7 @@ export const WeatherReport = ({ weatherData }: Props) => {
                     {iconArray.map((SvgIcon,index) => <SvgIcon key={index} className="max-h-[200px] max-w-[200px]"/>)}
                 </div>
                 <div className="text-[40px]">{weatherData.location.name}</div>
+                <div className="text-[20px]">{weatherData.location.region}, {weatherData.location.country}</div>
                 <div className="text-[25px]">{weatherData.current.weather_descriptions[0]}</div>
             </div>
             <div className="flex flex-col items-start">

@@ -15,6 +15,10 @@ export const get = async (location: string) => {
         }
     );
 
+    /*Unfortunately weatherstack API always return a 200 if the endpoint exists.
+    Because of that using a try catch will not allow the app to detect the error.
+    This is a  simple workaround to this issue
+    */
     if (Object.keys(response.data).includes("error")) {
         throw Error(
             `Request Error: ${response.data.error.info}`,
