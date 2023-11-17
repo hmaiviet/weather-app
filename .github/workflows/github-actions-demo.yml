@@ -16,3 +16,16 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+  deployment:
+    name: Deployment
+    runs-on: ubuntu-latest
+    if:
+      contains('
+        refs/heads/development
+        refs/heads/staging
+        refs/heads/main
+      ', github.ref)
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "Deploying branch"
