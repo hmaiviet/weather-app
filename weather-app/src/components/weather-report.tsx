@@ -14,7 +14,7 @@ export const WeatherReport = ({ weatherData }: Props) => {
         <div className='flex flex-col max-w-[400px] text-white font-sans items-start'>
             <div className="font-bold  self-center mb-[25px]">
                 <div className="flex flex-row items-center justify-center">
-                    {iconArray.map((SvgIcon) => <SvgIcon className="max-h-[200px] max-w-[200px]"/>)}
+                    {iconArray.map((SvgIcon,index) => <SvgIcon key={index} className="max-h-[200px] max-w-[200px]"/>)}
                 </div>
                 <div className="text-[40px]">{weatherData.location.name}</div>
                 <div className="text-[25px]">{weatherData.current.weather_descriptions[0]}</div>

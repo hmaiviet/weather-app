@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-import classNames from 'classnames';
-// import { useWeatherData } from './hooks/useWeatherData';
 import { ReactComponent as WeatherLogo } from "./assets/app-logo.svg";
 import { ReactComponent as BackIcon } from "./assets/back-arrow.svg";
-import { get } from './services/weather-data-service';
 import { WeatherReport } from './components/weather-report';
 import { WeatherResponse } from './types/weather-response-type';
 import { SubmitButton } from './components/submit-button';
@@ -18,25 +14,27 @@ function App() {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
   const [isError, setIsError] = useState(false);
 
-  const { data, refetch, error} = useWeatherData(input);
+  const { refetch, error} = useWeatherData(input);
 
   const handleKeyDown = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      refetch();
+      await refetch().then((response) => {
+        if (response.status==='success')
+          setWeatherData(response.data);
+        if (response.status === 'error')
+          setIsError(true);
+      })
     }
   }
 
   const onSubmitClick = async () => {
-    refetch();
+    await refetch().then((response) => {
+      if (response.status==='success')
+        setWeatherData(response.data);
+      if (response.status === 'error')
+        setIsError(true);
+    })
   }
-
-  useEffect(() => {
-    setWeatherData(data);
-  }, [data])
-
-  useEffect(() => {
-    if (!!error) setIsError(true);
-  },[error])
 
   return (
     <div className="App">

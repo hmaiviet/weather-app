@@ -23,9 +23,12 @@ router.get('/', function (req, res, next) {
     const queryAsString = prepareQuery(req.query);
     axios.get(`${process.env.API_BASE_ROUTE}current?access_key=${process.env.API_KEY}${queryAsString}`)
         .then(result => {
-            res.json(result.data);
+            res.send(result.data);
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err);
+            next(err);
+        })
 });
 
 module.exports = router;
