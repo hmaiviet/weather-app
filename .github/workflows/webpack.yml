@@ -9,6 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if:
+      contains('
+        refs/heads/development
+        refs/heads/staging
+        refs/heads/main
+      ', github.ref)
     defaults:
       run:
         working-directory: ./weather-app-backend
