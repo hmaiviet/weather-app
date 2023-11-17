@@ -1,22 +1,32 @@
+import { useState } from "react";
 import * as weatherDataService from "./../services/weather-data-service";
 import { useQuery } from "react-query";
-
-// type UseTimelineResponse = TimelineResponse & {
-//     isError: boolean;
-//     isLoading: boolean;
-// };
+import { WeatherResponse } from "../types/weather-response-type";
+import { ResponseError } from "../types/response-error-type";
 
 const DEFAULT_DATA = {};
 
-export const useWeatherData = () => {
-    const { isError, isLoading, data } = useQuery(["location", "London"], () =>
-        weatherDataService.get("London")
+// const fetchData = (location: string) => {
+//     return weatherDataService.get(location);
+// };
+
+export const useWeatherData = (location: string) => {
+    const { isError, error, data, refetch } = useQuery<WeatherResponse>(
+        ["weather-data", location],
+        () => weatherDataService.get(location),
+        {
+            enabled: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            retry: false,
+        }
     );
-    const weatherData = data ?? DEFAULT_DATA;
+    const weatherData = data ?? null;
 
     return {
         isError,
-        isLoading,
-        weatherData,
+        error,
+        data: weatherData,
+        refetch,
     };
 };

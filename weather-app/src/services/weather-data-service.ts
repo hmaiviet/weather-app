@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const get = async (location: string) => {
     const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_ROUTE}?access_key=${process.env.REACT_APP_API_KEY}&query=${location}`,
+        `${process.env.REACT_APP_API_BASE_ROUTE}/weather?query=${location}`,
         {
             method: "GET",
             headers: {
@@ -14,6 +14,13 @@ export const get = async (location: string) => {
             },
         }
     );
+
+    if (Object.keys(response.data).includes("error")) {
+        throw Error(
+            `Request Error: ${response.data.error.info}`,
+            response.data
+        );
+    }
 
     if (!response.data) {
         return null;
